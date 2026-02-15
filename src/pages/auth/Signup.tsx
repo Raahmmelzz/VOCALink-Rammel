@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import hero1 from "../../assets/images/hero-1.jpg";
 import hero2 from "../../assets/images/hero-2.jpg";
 import hero3 from "../../assets/images/hero-3.jpg";
+import hero4 from "../../assets/images/hero-4.jpg";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -33,17 +34,42 @@ export default function Signup() {
       left={
         <>
           <div className="polaroids">
-            <img className="polaroid p1" src={hero1} alt="community" />
-            <img className="polaroid p2" src={hero2} alt="classroom" />
-            <img className="polaroid p3" src={hero3} alt="learning" />
+            <img className="polaroid p1" src={hero1} alt="hero 1" />
+            <img className="polaroid p2" src={hero2} alt="hero 2" />
+            <img className="polaroid p3" src={hero3} alt="hero 3" />
+            <img className="polaroid p4" src={hero4} alt="hero 4" />
           </div>
 
-          <div className="brand-panel">
-            <div className="brand-badge" aria-hidden="true" />
-            <h1 className="brand-title">VocaLink</h1>
-            <p className="brand-subtitle">
-              Create an account to start using the platform.
-            </p>
+          <div className="left-center">
+            <div className="branding">
+              <div className="logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="3" fill="white" />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="7"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    opacity="0.5"
+                  />
+                </svg>
+              </div>
+
+              <h1 className="brand-title">VocaLink</h1>
+              <p className="brand-desc">
+                Create an account to start using the platform.
+              </p>
+            </div>
           </div>
         </>
       }
@@ -61,6 +87,7 @@ export default function Signup() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
+              autoComplete="username"
               required
             />
 
@@ -71,6 +98,7 @@ export default function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              autoComplete="email"
               required
             />
 
@@ -82,6 +110,7 @@ export default function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Create a password"
+                autoComplete="new-password"
                 required
               />
               <button
@@ -101,6 +130,11 @@ export default function Signup() {
             <p className="bottom-text">
               Already have an account? <Link to="/login">Sign In</Link>
             </p>
+
+            <div className="footer">
+              <p>© 2026 VocaLink v1.0.0</p>
+              <p>Designed for Deaf &amp; Mute Individuals</p>
+            </div>
           </form>
         </div>
       }
