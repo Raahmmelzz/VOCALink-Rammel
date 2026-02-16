@@ -14,6 +14,44 @@ body{
   color: var(--text);
 }
 
+/* Dashboard layout */
+.dashboard-shell{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#f6f8fb;
+}
+
+/* Header */
+.dashboard-header{
+  background:white;
+  padding:20px 28px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.dashboard-title{
+  margin:0;
+  font-size:24px;
+  font-weight:800;
+  color:#0f172a;
+}
+
+/* Content */
+.dashboard-content{
+  flex:1;
+  padding:28px;
+}
+
+/* Footer */
+.dashboard-footer{
+  background:white;
+  border-top:1px solid #e5e7eb;
+  padding:14px;
+  text-align:center;
+  font-size:14px;
+  color:#64748b;
+}
+
 /* Shell */
 .auth-shell{
   min-height:100vh;
@@ -25,7 +63,7 @@ body{
 .auth-left{
   background: linear-gradient(135deg, var(--blue1), var(--blue2));
   position:relative;
-  overflow:hidden;
+  overflow:visible;
   padding:48px 42px;
   display:flex;
   align-items:center;
@@ -109,11 +147,10 @@ body{
 .polaroid.p2{ top:40px; right:70px; transform: rotate(8deg); width:280px; height:180px; }
 .polaroid.p3{ bottom:30px; right:40px; transform: rotate(-8deg); width:300px; height:190px; }
 .polaroid.p4{
-  bottom:120px;
-  left:80px;
-  transform: rotate(10deg);
-  width:240px;
-  height:160px;
+  bottom:60px;   
+  left:40px;  
+  width:260px;
+  height:170px;
 }
 
 /* Right (form) */

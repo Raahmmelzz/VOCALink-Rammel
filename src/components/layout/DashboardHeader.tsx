@@ -14,7 +14,7 @@ export default function DashboardHeader() {
         alignItems: "center",
       }}
     >
-      <h2 style={{ margin: 0 }}>VocaLink Dashboard</h2>
+      <h2 style={{ margin: 0 }}>Dashboard</h2>
 
       <button
         onClick={logout}
