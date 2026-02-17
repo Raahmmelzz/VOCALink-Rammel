@@ -1,8 +1,14 @@
-import type { User, LoginPayload, SignupPayload } from "../types/auth";
+import type {
+  User,
+  LoginPayload,
+  SignupPayload,
+} from "../types/auth";
 
 const USERS = "vocalink_users";
 const SESSION = "vocalink_session";
 const REMEMBER = "vocalink_remember";
+
+
 
 interface StoredUser extends User {
   password: string;
