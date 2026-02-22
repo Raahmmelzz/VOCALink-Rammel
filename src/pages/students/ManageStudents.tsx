@@ -1,7 +1,7 @@
 import DashboardCard from "../../components/layout/DashboardCard";
 
 export default function ManageStudents() {
-  const dummyStudents = ["Alice Johnson", "Bob Smith", "Charlie Davis"];
+  const dummyStudents = ["Rammel Pacamo", "Marvin Bisakol", "Charlie Kirk"];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
