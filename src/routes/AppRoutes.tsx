@@ -3,18 +3,8 @@ import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
-
-// Import your new components here:
 import ManageStudents from "../pages/students/ManageStudents";
 import SpeechContexts from "../pages/tts/SpeechContexts";
-
-// A temporary component for the main dashboard landing page until you create it
-const DashboardOverview = () => (
-  <div style={{ background: "#fff", padding: 20, borderRadius: 14 }}>
-    <h2>Overview</h2>
-    <p>Select an option from the menu.</p>
-  </div>
-);
 
 export default function AppRoutes() {
   return (
@@ -32,13 +22,11 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        {/* These routes will inject into the <Outlet /> in your Dashboard */}
-        <Route index element={<DashboardOverview />} /> 
+        {/* We removed the index route that called DashboardOverview */}
         <Route path="students" element={<ManageStudents />} />
         <Route path="tts" element={<SpeechContexts />} />
       </Route>
 
-      {/* Catch-all route */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

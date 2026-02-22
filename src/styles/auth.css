@@ -292,3 +292,37 @@ body{
     display:block;
   }
 }
+
+/* Flexbox Dashboard Card */
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  /* Default alignment is left, but we can override this with inline styles or props */
+  align-items: flex-start; 
+  
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.card-title {
+  display: flex;
+  align-items: center; /* Aligns icons and text vertically if you add them later */
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--card-title-color, #0f172a); 
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.5;
+  width: 100%;
+}
