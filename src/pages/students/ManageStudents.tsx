@@ -1,49 +1,79 @@
+import { useState, useEffect } from "react";
 import DashboardCard from "../../components/layout/DashboardCard";
+import "../../styles/DashboardLayout.css";
 
 export default function ManageStudents() {
-  const dummyStudents = ["Rammel Pacamo", "Marvin Bisakol", "Charlie Kirk"];
+  const [students, setStudents] = useState<string[]>(() => {
+    const savedData = localStorage.getItem("vocalink_students");
+    return savedData ? JSON.parse(savedData) : ["Rammel Pacamo", "Marvin Bisakol", "Charlie Kirk"];
+  });
+
+  const [newStudentName, setNewStudentName] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("vocalink_students", JSON.stringify(students));
+  }, [students]);
+
+  const handleAddStudent = () => {
+    if (newStudentName.trim() === "") return;
+    setStudents([...students, newStudentName.trim()]);
+    setNewStudentName("");
+  };
+
+  const handleDeleteStudent = (indexToRemove: number) => {
+    setStudents(students.filter((_, index) => index !== indexToRemove));
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="manage-students-container">
       
-      {/* BOX 1: Header and Add Button */}
       <DashboardCard>
-        {/* The ugly flex wrapper is GONE. The card handles the spacing. */}
         <div>
-          <h2 style={{ color: "#2aa7ff", margin: "0 0 8px 0", fontSize: "24px" }}>
-            Manage Students
-          </h2>
-          <p style={{ color: "#64748b", margin: 0 }}>
-            This is your student roster. You can add or edit students here.
+          <h2 className="page-title">Manage Students</h2>
+          <p className="page-desc">
+            This is your student roster. You can add or remove students here.
           </p>
         </div>
         
-        <button 
-          style={{ 
-            backgroundColor: "#2aa7ff", color: "white", border: "none", 
-            padding: "10px 16px", borderRadius: "6px", cursor: "pointer" 
-          }}
-        >
-          + Add New Student
-        </button>
+        <div className="input-group">
+          <input 
+            type="text" 
+            value={newStudentName}
+            onChange={(e) => setNewStudentName(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAddStudent()}
+            placeholder="Enter student name..."
+            className="student-input"
+          />
+          <button onClick={handleAddStudent} className="btn-primary">
+            + Add
+          </button>
+        </div>
       </DashboardCard>
 
-      {/* BOX 2: The Roster */}
       <DashboardCard>
-        <h3 style={{ color: "#334155", margin: 0, fontSize: "18px" }}>
-          Current Roster
-        </h3>
+        <div className="roster-header">
+          <h3 className="roster-title">Current Roster</h3>
+          <span className="badge">Total: {students.length}</span>
+        </div>
         
-        <ul style={{ 
-          color: "#0f172a", margin: 0, paddingLeft: "24px", 
-          display: "flex", flexDirection: "column", gap: "8px", fontSize: "16px"
-        }}>
-          {dummyStudents.map((student, index) => (
-            <li key={index}>{student}</li>
-          ))}
-        </ul>
+        {students.length === 0 ? (
+          <p className="empty-state">No students in the roster yet.</p>
+        ) : (
+          <ul className="student-list">
+            {students.map((student, index) => (
+              <li key={index} className="student-item">
+                <span className="student-name">{student}</span>
+                <button 
+                  onClick={() => handleDeleteStudent(index)}
+                  className="btn-danger"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </DashboardCard>
-
-    </div>
+    </div>    
   );
 }

@@ -1,12 +1,11 @@
 import DashboardCard from "../../components/layout/DashboardCard";
+import "../../styles/DashboardLayout.css";
 
 export default function SpeechContexts() {
   return (
     <DashboardCard>
-      <h2 style={{ color: "#2aa7ff", margin: 0, fontSize: "24px" }}>
-        Speech Contexts
-      </h2>
-      <p style={{ color: "#64748b", margin: 0 }}>
+      <h2 className="page-title">Speech Contexts</h2>
+      <p className="page-desc">
         This is where you configure text-to-speech and icon-based communication settings.
       </p>
     </DashboardCard>

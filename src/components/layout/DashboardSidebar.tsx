@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import "../../styles/DashboardComponent.css";
 
 interface DashboardSidebarProps {
   isOpen: boolean;
@@ -9,84 +10,38 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
   const { user, logout } = useAuth();
 
-  const navStyle = ({ isActive }: { isActive: boolean }) => ({
-    color: isActive ? "#646cff" : "#334155",
-    fontWeight: isActive ? "bold" : "normal", 
-    textDecoration: "none",
-    padding: "8px 0", 
-    display: "block" 
-  });
-
   return (
     <>
-      {/* Sidebar Overlay */}
-      {isOpen && (
-        <div 
-          onClick={onClose}
-          style={{ position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.5)", zIndex: 999, cursor: "pointer" }}
-        />
-      )}
+      {isOpen && <div onClick={onClose} className="sidebar-overlay" />}
 
-      {/* Sidebar Navigation */}
-      <nav 
-        style={{
-          position: "fixed",
-          top: 0,
-          left: isOpen ? "0" : "-300px", 
-          width: "250px",
-          height: "100vh",
-          background: "#fff",
-          padding: "80px 20px 20px", 
-          boxShadow: "4px 0 15px rgba(0,0,0,0.1)",
-          transition: "left 0.3s ease-in-out",
-          zIndex: 1000, 
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px"
-        }}
-      >
-        <button 
-          onClick={onClose}
-          style={{ position: "absolute", top: "20px", right: "20px", background: "none", border: "none", fontSize: "20px", cursor: "pointer" }}
-        >
-          ✕
-        </button>
+      <nav className={`sidebar-nav ${isOpen ? 'open' : ''}`}>
+        <button onClick={onClose} className="sidebar-close-btn">✕</button>
 
-        <h3 style={{ marginTop: 0, marginBottom: "10px" }}>System Menu</h3>
+        <h3 className="sidebar-title">System Menu</h3>
         
-        <NavLink end onClick={onClose} to="/dashboard" style={navStyle}>
+        <NavLink end onClick={onClose} to="/dashboard" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
           Overview
         </NavLink>
         
-        <NavLink onClick={onClose} to="/dashboard/students" style={navStyle}>
+        <NavLink onClick={onClose} to="/dashboard/students" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
           Manage Students
         </NavLink>
         
-        <NavLink onClick={onClose} to="/dashboard/tts" style={navStyle}>
+        <NavLink onClick={onClose} to="/dashboard/tts" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
           Text-to-Speech Config
         </NavLink> 
+
+        <NavLink onClick={onClose} to="/dashboard/boards" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+          Manage Boards
+        </NavLink>
         
-        <div style={{ marginTop: "auto", borderTop: "1px solid #e5e7eb", paddingTop: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontWeight: "bold", color: "#213547", fontSize: "1rem" }}>
-              {user?.username || "Educator"}
-            </span>
-            <span style={{ color: "#64748b", fontSize: "0.85rem", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {user?.email || "user@vocalink.edu"}
-            </span>
+        <div className="sidebar-footer">
+          <div className="user-info">
+            <span className="user-name">{user?.username || "Educator"}</span>
+            <span className="user-email">{user?.email || "user@vocalink.edu"}</span>
           </div>
 
-          <button 
-            onClick={() => {
-              onClose();
-              logout();
-            }}
-            style={{ 
-              background: "#fee2e2", border: "none", color: "#ef4444", fontWeight: "bold", 
-              cursor: "pointer", padding: "10px 12px", borderRadius: "8px", fontSize: "0.95rem",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", width: "100%", transition: "background 0.2s"
-            }}
-          >
+          <button onClick={() => { onClose(); logout(); }} className="logout-btn">
             Log Out
           </button>
         </div>
