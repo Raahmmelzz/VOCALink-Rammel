@@ -6,6 +6,6 @@ export default defineConfig({
   base: "/VOCALink-Rammel/",
   build: {
     outDir: "docs",
-    emptyOutDir: true,
+    emptyOutDir: true,      
   },
 });
