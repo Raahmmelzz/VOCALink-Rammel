@@ -169,7 +169,7 @@ export default function ManageStudents() {
                     <span className="user-email" style={{ fontSize: "0.9rem", display: "block" }}>Grade {student.grade} • {student.need}</span>
                     <div style={{ marginTop: "8px", fontSize: "0.8rem", color: "#64748b" }}>
                       <strong>Guardian:</strong> {student.guardian} | <strong>Contact:</strong> {student.contact}<br/>
-                      <strong>Addr:</strong> {student.address}
+                      <strong>Address:</strong> {student.address}
                     </div>
                   </div>
                   <div style={{ display: "flex", gap: "8px", zIndex: 10 }}>
