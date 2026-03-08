@@ -1,12 +1,11 @@
-// src/context/AuthContext.tsx
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import type { ReactNode } from "react";
 import authService from "../services/authService";
 import type { User, LoginPayload, SignupPayload } from "../types/auth";
 
 interface AuthContextType {
   user: User | null;
-  isLoading: boolean; // Add this
+  isLoading: boolean;
   login: (data: LoginPayload) => Promise<void>;
   signup: (data: SignupPayload) => Promise<void>;
   logout: () => void;
@@ -17,38 +16,51 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Start as true
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Initialize Session
   useEffect(() => {
     const session = authService.getSession();
     if (session) setUser(session);
-    setIsLoading(false); // Stop loading once checked
+    setIsLoading(false);
   }, []);
 
-  const login = async (data: LoginPayload) => {
+  // Use useCallback so these functions don't change on every render
+  const login = useCallback(async (data: LoginPayload) => {
     const loggedUser = authService.login(data);
     setUser(loggedUser);
-  };
+  }, []);
 
-  const signup = async (data: SignupPayload) => {
+  const signup = useCallback(async (data: SignupPayload) => {
     authService.signup(data);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     authService.logout();
     setUser(null);
-  };
+  }, []);
 
-  const updateUser = (newData: Partial<User>) => {
-    if (user) {
-      const updatedUser = { ...user, ...newData };
-      setUser(updatedUser);
-      authService.saveSession(updatedUser); 
-    }
-  };
+  const updateUser = useCallback((newData: Partial<User>) => {
+    setUser((prev) => {
+      if (!prev) return null;
+      const updated = { ...prev, ...newData };
+      authService.saveSession(updated); // Sync with localStorage/Service
+      return updated;
+    });
+  }, []);
+
+  // useMemo ensures the 'value' object only changes when user or isLoading changes
+  const value = useMemo(() => ({
+    user,
+    isLoading,
+    login,
+    signup,
+    logout,
+    updateUser
+  }), [user, isLoading, login, signup, logout, updateUser]);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, signup, logout, updateUser }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

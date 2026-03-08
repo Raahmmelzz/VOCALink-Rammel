@@ -1,32 +1,26 @@
-import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import DashboardHeader from "../../components/layout/DashboardHeader";
 import DashboardFooter from "../../components/layout/DashboardFooter";
 import DashboardSidebar from "../../components/layout/DashboardSidebar";
-
-// Extracted Components
 import StatCard from "../../components/layout/StatCard";
 import ActivityChart from "../../components/layout/ActivityChart";
 import TopStudentsTable from "../../components/layout/TopStudentsTable";
 
-// Import your newly extracted mock data
+import { useDashboard } from "../../hooks/useDashboard";
 import { weeklyActivity, monthlyActivity, topStudents } from "../../data/mockData";
 
 import "../../styles/DashboardLayout.css";
 
 export default function Dashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const location = useLocation();
-
-  const isOverview = location.pathname === "/dashboard" || location.pathname === "/dashboard/";
+  const { isSidebarOpen, isOverview, openSidebar, closeSidebar } = useDashboard();
 
   return (
     <div className="dashboard-layout">
-      <DashboardHeader onOpenMenu={() => setIsSidebarOpen(true)} />
+      <DashboardHeader onOpenMenu={openSidebar} />
 
       <DashboardSidebar
         isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+        onClose={closeSidebar}
       />
 
       <main className={`dashboard-main ${isSidebarOpen ? "sidebar-open" : ""}`}>
